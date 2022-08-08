@@ -1,0 +1,22 @@
+.interactionTodo {
+  width: 70%;
+}
+
+.interactionTodo__form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  padding: 10px;
+}
+
+.interactionTodo__textarea {
+  outline: none;
+  border-radius: 0;
+  width: 100%;
+  resize: none;
+}
+
+.interactionTodo__all-buttons {
+  display: flex;
+  column-gap: 10px;
+}

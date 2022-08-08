@@ -1,0 +1,19 @@
+.todos {
+  width: 30%;
+}
+
+.todos__list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.todos__item {
+  padding: 5px 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
