@@ -1,6 +1,6 @@
-@import url(./blocks/main.css);
-@import url(./blocks/todos.css);
-@import url(./blocks/interaction-todo.css);
+@import url(./styles/main.css);
+@import url(./styles/todos.css);
+@import url(./styles/interaction-todo.css);
 
 body {
   margin: 0;

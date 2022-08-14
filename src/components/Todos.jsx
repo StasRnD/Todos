@@ -1,36 +1,32 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
-export const Todos = ({ todoList, setActiveTodo, dispatch }) => {
-  const [filterValue, setFilterValue] = useState('');
+export const Todos = ({ todoList, setActiveTodo }) => {
+  const [query, setQuery] = useState('');
 
-  const choiseTodo = (evt) => {
-    setActiveTodo({
-      number: evt.target.id,
-      text: evt.target.textContent,
-    });
-  };
+  const result = useMemo(
+    () =>
+      todoList.filter((todo) =>
+        todo.value.toLowerCase().includes(query.toLowerCase())
+      ),
+    [todoList, query]
+  );
 
   const filterTodo = (evt) => {
-    setFilterValue(evt.target.value);
-    dispatch({
-      type: 'FILTER',
-      payload: filterValue.toLowerCase(),
-    });
+    setQuery(evt.target.value);
   };
 
   return (
     <div className='todos'>
-      <input onChange={filterTodo} value={filterValue} />
+      <input onChange={filterTodo} value={query} />
       <ul className='todos__list'>
-        {todoList.map((todo) => {
+        {result.map((todo) => {
           return (
             <li
-              key={todo.number}
-              id={todo.number}
+              key={todo.id}
               className='todos__item'
-              onClick={choiseTodo}
+              onClick={() => setActiveTodo(todo)}
             >
-              {todo.text}
+              {todo.value}
             </li>
           );
         })}

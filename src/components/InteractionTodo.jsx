@@ -1,78 +1,54 @@
+
+
 export const InteractionTodo = ({ dispatch, activeTodo, setActiveTodo }) => {
   const changeNewTodoText = (evt) => {
-    setActiveTodo({ number: activeTodo.number, text: evt.target.value });
+    setActiveTodo({ id: activeTodo.id, value: evt.target.value });
   };
 
-  const actionWithTodo = (evt) => {
-    evt.preventDefault();
-    switch (evt.target.value) {
-      case 'ADD':
-        dispatch({
-          type: 'ADD__TODO',
-          payload: activeTodo.text,
-        });
-        break;
-      case 'DELETE':
-        dispatch({
-          type: 'REMOVE__TODO',
-          payload: activeTodo.number,
-        });
-        break;
-      case 'REDAKTOR':
-        dispatch({
-          type: 'REDAKTOR',
-          payload: activeTodo,
-        });
-        break;
-
-      default:
-        return null;
+  const addTodo = () => {
+    if (activeTodo.value) {
+      dispatch({
+        type: 'ADD__TODO',
+        payload: activeTodo,
+      });
     }
-
-    setActiveTodo({ text: '' });
+    setActiveTodo({ value: '' });
   };
 
-  // const addTodo = () => {
-  //   dispatch({
-  //     type: 'ADD__TODO',
-  //     payload: todoText.text,
-  //   });
-  //   setNewTodo({ text: '' });
-  // };
+  const removeTodo = () => {
+    dispatch({
+      type: 'REMOVE__TODO',
+      payload: activeTodo.id,
+    });
+    setActiveTodo({ value: '' });
+  };
 
-  // const removeTodo = () => {
-  //   dispatch({
-  //     type: 'REMOVE__TODO',
-  //     payload: activeTodo.number,
-  //   });
-  //   setNewTodo({ text: '' });
-  // };
+  const editTodo = () => {
+    dispatch({
+      type: 'EDIT__TODO',
+      payload: activeTodo,
+    });
+    setActiveTodo({ value: '' });
+  };
 
-  // const redaktor = () => {
-  //   dispatch({
-  //     type: 'REDAKTOR',
-  //     payload: todoText,
-  //   });
-  // };
-  //
   return (
     <div className='interactionTodo'>
       <form className='interactionTodo__form'>
         <textarea
           className='interactionTodo__textarea'
           placeholder='Новое дело'
-          value={activeTodo.text}
+          value={activeTodo.value}
           onChange={changeNewTodoText}
         ></textarea>
         <div className='interactionTodo__all-buttons'>
-          <button onClick={actionWithTodo} value='ADD'>
+          <button type='button' onClick={addTodo}>
             Добавить дело
           </button>
-          <button onClick={actionWithTodo} value='REDAKTOR'>
+          <button type='button' onClick={editTodo}>
             Редактировать
           </button>
 
-          <button onClick={actionWithTodo} value='DELETE'>
+          <button type='button' onClick={removeTodo}>
             Удалить
           </button>
         </div>
