@@ -12,8 +12,12 @@
 }
 
 .todos__item {
-  padding: 5px 10px;
+  margin: 5px 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.todos__search {
+  margin: 10px;
 }
