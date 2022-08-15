@@ -3,7 +3,6 @@ import { Todos } from './Todos';
 import { InteractionTodo } from './InteractionTodo';
 import { todos } from '../constants/constants';
 
-
 const todoReducer = (todos, action) => {
   switch (action.type) {
     case 'ADD__TODO':
@@ -23,6 +22,7 @@ const todoReducer = (todos, action) => {
 export const App = () => {
   const [activeTodo, setActiveTodo] = useState({ value: '' });
   const [todoList, dispatch] = useReducer(todoReducer, todos);
+  const [isEditing, setIsEditing] = useState(false)
  
   return (
     <div className='main'>
@@ -30,14 +30,16 @@ export const App = () => {
         todoList={todoList}
         setActiveTodo={setActiveTodo}
         dispatch={dispatch}
+        setIsEditing={setIsEditing}
       />
       
       <InteractionTodo 
-        
         dispatch={dispatch}
         activeTodo={activeTodo}
         todoList={todoList}
         setActiveTodo={setActiveTodo}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
       />
     </div>
   );

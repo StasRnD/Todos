@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 
-export const Todos = ({ todoList, setActiveTodo }) => {
+export const Todos = ({ todoList, setActiveTodo, setIsEditing }) => {
   const [query, setQuery] = useState('');
 
-  const result = useMemo(
+  const todos = useMemo(
     () =>
       todoList.filter((todo) =>
         todo.value.toLowerCase().includes(query.toLowerCase())
@@ -15,16 +15,21 @@ export const Todos = ({ todoList, setActiveTodo }) => {
     setQuery(evt.target.value);
   };
 
+  const onTodoClick = (todo) => {
+    setActiveTodo(todo)
+    setIsEditing(true)
+  }
+
   return (
     <div className='todos'>
       <input onChange={filterTodo} value={query} />
       <ul className='todos__list'>
-        {result.map((todo) => {
+        {todos.map((todo) => {
           return (
             <li
               key={todo.id}
               className='todos__item'
-              onClick={() => setActiveTodo(todo)}
+              onClick={() => onTodoClick(todo)}
             >
               {todo.value}
             </li>

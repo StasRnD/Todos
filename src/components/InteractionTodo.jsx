@@ -1,8 +1,20 @@
 
 
-export const InteractionTodo = ({ dispatch, activeTodo, setActiveTodo }) => {
+export const InteractionTodo = ({
+  dispatch,
+  activeTodo,
+  setActiveTodo,
+  isEditing,
+  setIsEditing,
+}) => {
+
   const changeNewTodoText = (evt) => {
     setActiveTodo({ id: activeTodo.id, value: evt.target.value });
+  };
+
+  const cancelAction = () => {
+    setActiveTodo({ value: '' });
+    setIsEditing(false);
   };
 
   const addTodo = () => {
@@ -12,7 +24,7 @@ export const InteractionTodo = ({ dispatch, activeTodo, setActiveTodo }) => {
         payload: activeTodo,
       });
     }
-    setActiveTodo({ value: '' });
+    cancelAction();
   };
 
   const removeTodo = () => {
@@ -20,7 +32,7 @@ export const InteractionTodo = ({ dispatch, activeTodo, setActiveTodo }) => {
       type: 'REMOVE__TODO',
       payload: activeTodo.id,
     });
-    setActiveTodo({ value: '' });
+    cancelAction();
   };
 
   const editTodo = () => {
@@ -28,7 +40,7 @@ export const InteractionTodo = ({ dispatch, activeTodo, setActiveTodo }) => {
       type: 'EDIT__TODO',
       payload: activeTodo,
     });
-    setActiveTodo({ value: '' });
+    cancelAction();
   };
 
   return (
@@ -41,15 +53,18 @@ export const InteractionTodo = ({ dispatch, activeTodo, setActiveTodo }) => {
           onChange={changeNewTodoText}
         ></textarea>
         <div className='interactionTodo__all-buttons'>
-          <button type='button' onClick={addTodo}>
+          <button type='button' onClick={addTodo} disabled={isEditing}>
             Добавить дело
           </button>
-          <button type='button' onClick={editTodo}>
+          <button type='button' onClick={editTodo} disabled={!isEditing}>
             Редактировать
           </button>
 
-          <button type='button' onClick={removeTodo}>
+          <button type='button' onClick={removeTodo} disabled={!isEditing}>
             Удалить
+          </button>
+          <button type='button' onClick={cancelAction}>
+            Отмена
           </button>
         </div>
       </form>
