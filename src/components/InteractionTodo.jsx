@@ -1,4 +1,4 @@
-
+import { useState, useEffect } from 'react';
 
 export const InteractionTodo = ({
   dispatch,
@@ -7,9 +7,15 @@ export const InteractionTodo = ({
   isEditing,
   setIsEditing,
 }) => {
+  const [value, setValue] = useState(activeTodo.value);
+  const canSave = activeTodo.value !== value;
+
+  useEffect(() => {
+    setValue(activeTodo.value);
+  }, [activeTodo]);
 
   const changeNewTodoText = (evt) => {
-    setActiveTodo({ id: activeTodo.id, value: evt.target.value });
+    setValue(evt.target.value);
   };
 
   const cancelAction = () => {
@@ -18,10 +24,10 @@ export const InteractionTodo = ({
   };
 
   const addTodo = () => {
-    if (activeTodo.value) {
+    if (value) {
       dispatch({
         type: 'ADD__TODO',
-        payload: activeTodo,
+        payload: { id: activeTodo.id, value },
       });
     }
     cancelAction();
@@ -38,18 +44,18 @@ export const InteractionTodo = ({
   const editTodo = () => {
     dispatch({
       type: 'EDIT__TODO',
-      payload: activeTodo,
+      payload: { id: activeTodo.id, value },
     });
     cancelAction();
   };
-
+  
   return (
     <div className='interactionTodo'>
       <form className='interactionTodo__form'>
         <textarea
           className='interactionTodo__textarea'
           placeholder='Новое дело'
-          value={activeTodo.value}
+          value={value}
           onChange={changeNewTodoText}
         ></textarea>
         <div className='interactionTodo__all-buttons'>
@@ -60,7 +66,11 @@ export const InteractionTodo = ({
             Редактировать
           </button>
 
-          <button type='button' onClick={removeTodo} disabled={!isEditing}>
+          <button
+            type='button'
+            onClick={removeTodo}
+            disabled={!isEditing || canSave}
+          >
             Удалить
           </button>
           <button type='button' onClick={cancelAction}>
