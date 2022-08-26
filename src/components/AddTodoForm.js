@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { addTodo } from '../redux/redux';
+import { useDispatch } from 'react-redux';
 
-export const AddTodoForm = ({ addTodo }) => {
+export const AddTodoForm = () => {
+  const dispatch = useDispatch();
   //текст добавляемой todo
   const [value, setValue] = useState('');
 
@@ -9,7 +12,7 @@ export const AddTodoForm = ({ addTodo }) => {
 
   const onAdd = () => {
     if (canAdd) {
-      addTodo(value);
+      dispatch(addTodo(value));
     }
     setValue('');
   };

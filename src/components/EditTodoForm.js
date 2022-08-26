@@ -1,12 +1,20 @@
 import { useEffect, useState } from 'react';
+import { removeTodo, editTodo } from '../redux/redux';
+import { useDispatch } from 'react-redux';
 
-export const EditTodoForm = ({ activeTodo, removeTodo, editTodo }) => {
+export const EditTodoForm = ({ activeTodo, setActiveTodoId }) => {
   const [value, setValue] = useState(activeTodo.value);
+  const dispatch = useDispatch();
 
   //активная кнопка редактирования и удаления, если текст выбранной todo не изменён,
   //то кнопка редактировать отключена, а удаление включено
   // и наоборот
   const isNewValue = value !== activeTodo.value;
+
+  const removeTodoButtonClick = () => {
+    dispatch(removeTodo(activeTodo.id));
+    setActiveTodoId(null);
+  };
 
   //отображение текста выбраноой todo в форме редактирования
   useEffect(() => setValue(activeTodo.value), [activeTodo.value]);
@@ -24,14 +32,14 @@ export const EditTodoForm = ({ activeTodo, removeTodo, editTodo }) => {
         <div className='interaction-with-todo__actions'>
           <button
             type='button'
-            onClick={() => editTodo({ ...activeTodo, value })}
+            onClick={() => dispatch(editTodo({ ...activeTodo, value }))}
             disabled={!isNewValue}
           >
             Редактировать
           </button>
           <button
             type='button'
-            onClick={() => removeTodo(activeTodo.id)}
+            onClick={removeTodoButtonClick}
             disabled={isNewValue}
           >
             Удалить

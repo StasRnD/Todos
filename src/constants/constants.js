@@ -1,4 +1,4 @@
-export const todos = [
+export const initialState = [
   { id: 1, value: 'Сварить суп' },
   { id: 2, value: 'Вынести мусор' },
   { id: 3, value: 'Сходить за покупками' },
